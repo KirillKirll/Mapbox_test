@@ -18,6 +18,7 @@ interface viewport {
 interface MarkerTypes {
   latitude: any;
   longitude: any;
+  index: number;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -51,6 +52,7 @@ const App: React.FC = () => {
       const dots = {
         latitude: getRandomCoordinate(53.857974, 53.942472),
         longitude: getRandomCoordinate(27.48243, 27.570224),
+        index: i + 1,
       };
 
       setMarker((state) => {
@@ -81,7 +83,9 @@ const App: React.FC = () => {
         {marker.map((element, id) => {
           return (
             <Marker latitude={element.latitude} longitude={element.longitude} key={id}>
-              HELLO
+              <div className="circle">
+                <span>{element.index}</span>
+              </div>
             </Marker>
           );
         })}
