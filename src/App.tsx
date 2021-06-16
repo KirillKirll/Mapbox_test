@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Map, { Marker } from "react-map-gl";
+import Map, { Marker, Source, Layer } from "react-map-gl";
 import Button from "@material-ui/core/Button";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
@@ -31,6 +31,49 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+interface GeoJSON {
+  type: any;
+  properties: object;
+  geometry: any;
+}
+
+const geojson: GeoJSON = {
+  type: "Feature",
+  properties: {},
+  geometry: {
+    type: "LineString",
+    coordinates: [
+      [27.604389, 53.949264],
+      [27.452036, 53.949264],
+      [27.452036, 53.859167],
+      [27.604389, 53.859167],
+      [27.604389, 53.949264],
+    ],
+  },
+};
+
+interface LayerStyle {
+  id: any;
+  type: any;
+  source: any;
+  layout: object;
+  paint: object;
+}
+
+const layerStyle: LayerStyle = {
+  id: "route",
+  type: "line",
+  source: "route",
+  layout: {
+    "line-join": "round",
+    "line-cap": "round",
+  },
+  paint: {
+    "line-color": "#8B0000",
+    "line-width": 2,
+  },
+};
+
 const App: React.FC = () => {
   const classes = useStyles();
   const [viewport, setViewport] = React.useState<viewport>({
@@ -41,7 +84,6 @@ const App: React.FC = () => {
     zoom: 11,
   });
   const [marker, setMarker] = React.useState<MarkerTypes[]>([]);
-  console.log(marker);
 
   const handleClick = () => {
     for (let i = 0; i < 40; i++) {
@@ -50,8 +92,8 @@ const App: React.FC = () => {
       };
 
       const dots = {
-        latitude: getRandomCoordinate(53.857974, 53.942472),
-        longitude: getRandomCoordinate(27.48243, 27.570224),
+        latitude: getRandomCoordinate(53.859167, 53.949264),
+        longitude: getRandomCoordinate(27.452036, 27.594389),
         index: i + 1,
       };
 
@@ -59,11 +101,6 @@ const App: React.FC = () => {
         return [...state, dots];
       });
     }
-
-    // latitude:
-    // getRandomLatitude(54.000472, 53.794074),
-    // // longitude:
-    // getRandomLongitude(27.31243, 27.788224),
   };
 
   return (
@@ -80,6 +117,9 @@ const App: React.FC = () => {
             split
           </Button>
         </div>
+        <Source id="lineLayer" type="geojson" data={geojson}>
+          <Layer {...layerStyle} />
+        </Source>
         {marker.map((element, id) => {
           return (
             <Marker latitude={element.latitude} longitude={element.longitude} key={id}>
