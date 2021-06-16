@@ -160,6 +160,15 @@ const App: React.FC = () => {
     setIsSquareSplitted(true);
   };
 
+  const sectorColors = (el: any) => {
+    if (isSquareSplitted) {
+      if (el.longitude > 27.530389 && el.latitude > 53.904264) return { background: "yellow" };
+      if (el.longitude > 27.530389 && el.latitude < 53.904264) return { background: "blue" };
+      if (el.latitude > 53.904264) return { background: "green" };
+      if (el.latitude < 53.904264) return { background: "purple" };
+    } else return;
+  };
+
   return (
     <div className="App">
       <Map
@@ -187,10 +196,10 @@ const App: React.FC = () => {
             </Source>
           </>
         ) : null}
-        {marker.map((element, id) => {
+        {marker.map((element: any, id) => {
           return (
             <Marker latitude={element.latitude} longitude={element.longitude} key={id}>
-              <div className="circle">
+              <div className="circle" style={sectorColors(element)}>
                 <span>{element.index}</span>
               </div>
             </Marker>
