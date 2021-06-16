@@ -21,20 +21,18 @@ interface MarkerTypes {
   index: number;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      "& > *": {
-        margin: theme.spacing(2),
-      },
-    },
-  }),
-);
-
 interface GeoJSON {
   type: any;
   properties: object;
   geometry: any;
+}
+
+interface LayerStyle {
+  id: any;
+  type: any;
+  source: any;
+  layout: object;
+  paint: object;
 }
 
 const geojson: GeoJSON = {
@@ -52,13 +50,29 @@ const geojson: GeoJSON = {
   },
 };
 
-interface LayerStyle {
-  id: any;
-  type: any;
-  source: any;
-  layout: object;
-  paint: object;
-}
+const lineOne: GeoJSON = {
+  type: "Feature",
+  properties: {},
+  geometry: {
+    type: "LineString",
+    coordinates: [
+      [27.604389, 53.904264],
+      [27.452036, 53.904264],
+    ],
+  },
+};
+
+const lineTwo: GeoJSON = {
+  type: "Feature",
+  properties: {},
+  geometry: {
+    type: "LineString",
+    coordinates: [
+      [27.530389, 53.859167],
+      [27.530389, 53.949264],
+    ],
+  },
+};
 
 const layerStyle: LayerStyle = {
   id: "route",
@@ -74,6 +88,44 @@ const layerStyle: LayerStyle = {
   },
 };
 
+const layerOne: LayerStyle = {
+  id: "routeOne",
+  type: "line",
+  source: "route",
+  layout: {
+    "line-join": "round",
+    "line-cap": "round",
+  },
+  paint: {
+    "line-color": "#8B0000",
+    "line-width": 2,
+  },
+};
+
+const layerTwo: LayerStyle = {
+  id: "routeTwo",
+  type: "line",
+  source: "route",
+  layout: {
+    "line-join": "round",
+    "line-cap": "round",
+  },
+  paint: {
+    "line-color": "#8B0000",
+    "line-width": 2,
+  },
+};
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      "& > *": {
+        margin: theme.spacing(2),
+      },
+    },
+  }),
+);
+
 const App: React.FC = () => {
   const classes = useStyles();
   const [viewport, setViewport] = React.useState<viewport>({
@@ -81,11 +133,12 @@ const App: React.FC = () => {
     longitude: 27.5618791,
     width: "100vw",
     height: "100vh",
-    zoom: 11,
+    zoom: 12,
   });
   const [marker, setMarker] = React.useState<MarkerTypes[]>([]);
+  const [isSquareSplitted, setIsSquareSplitted] = React.useState<boolean>(false);
 
-  const handleClick = () => {
+  const handleMarkers = () => {
     for (let i = 0; i < 40; i++) {
       const getRandomCoordinate = (min: number, max: number) => {
         return Math.random() * (max - min) + min;
@@ -103,6 +156,10 @@ const App: React.FC = () => {
     }
   };
 
+  const handleSplitBorders = () => {
+    setIsSquareSplitted(true);
+  };
+
   return (
     <div className="App">
       <Map
@@ -110,16 +167,26 @@ const App: React.FC = () => {
         mapboxApiAccessToken={TOKEN}
         onViewportChange={(viewport: any) => setViewport(viewport)}>
         <div className={classes.root}>
-          <Button variant="contained" color="primary" onClick={handleClick}>
+          <Button variant="contained" color="primary" onClick={handleMarkers}>
             markers
           </Button>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={handleSplitBorders}>
             split
           </Button>
         </div>
         <Source id="lineLayer" type="geojson" data={geojson}>
           <Layer {...layerStyle} />
         </Source>
+        {isSquareSplitted ? (
+          <>
+            <Source id="lineOne" type="geojson" data={lineOne}>
+              <Layer {...layerOne} />
+            </Source>
+            <Source id="lineTwo" type="geojson" data={lineTwo}>
+              <Layer {...layerTwo} />
+            </Source>
+          </>
+        ) : null}
         {marker.map((element, id) => {
           return (
             <Marker latitude={element.latitude} longitude={element.longitude} key={id}>
