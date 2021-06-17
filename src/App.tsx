@@ -11,7 +11,7 @@ import SourceLayer from "./components/SourceLayer";
 
 const App: React.FC = () => {
   const [viewport, setViewport] = React.useState<Viewport>(DEFAULT);
-  const [marker, setMarker] = React.useState<MarkerTypes[]>([]);
+  const [markers, setMarker] = React.useState<MarkerTypes[]>([]);
   const [isSquareSplitted, setIsSquareSplitted] = React.useState<boolean>(false);
 
   return (
@@ -19,7 +19,7 @@ const App: React.FC = () => {
       <Map
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-        onViewportChange={(viewport: any) => setViewport(viewport)}>
+        onViewportChange={(viewport: Viewport) => setViewport(viewport)}>
         <Buttons setIsSquareSplitted={setIsSquareSplitted} setMarker={setMarker} />
         <SourceLayer id="lineLayer" data={geojson} layerData={layerBorder} />
         {isSquareSplitted ? (
@@ -28,7 +28,7 @@ const App: React.FC = () => {
             <SourceLayer id="lineVertical" data={lineVertical} layerData={layerVertical} />
           </>
         ) : null}
-        <Markers marker={marker} isSquareSplitted={isSquareSplitted} />
+        <Markers markers={markers} isSquareSplitted={isSquareSplitted} />
       </Map>
     </div>
   );

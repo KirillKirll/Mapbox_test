@@ -1,9 +1,10 @@
 import Button from "@material-ui/core/Button";
+import { MarkerTypes } from "../types/types";
 import { getRandomCoordinate, useStyles } from "../utils/utils";
 
 interface ButtonsTypes {
-  setIsSquareSplitted: any;
-  setMarker: any;
+  setIsSquareSplitted: (isSquareSplitted: boolean) => void;
+  setMarker: React.Dispatch<React.SetStateAction<MarkerTypes[]>>;
 }
 
 function Buttons({ setIsSquareSplitted, setMarker }: ButtonsTypes) {
@@ -17,7 +18,7 @@ function Buttons({ setIsSquareSplitted, setMarker }: ButtonsTypes) {
         index: i + 1,
       };
 
-      setMarker((state: any) => {
+      setMarker((state: MarkerTypes[]) => {
         return [...state, dots];
       });
     }

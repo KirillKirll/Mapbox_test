@@ -7,21 +7,22 @@ export interface Viewport {
 }
 
 export interface MarkerTypes {
-  latitude: any;
-  longitude: any;
+  latitude: number;
+  longitude: number;
   index: number;
+  map?: (marker: object) => void;
 }
 
 export interface GeoJSON {
-  type: any;
-  properties: object;
-  geometry: any;
+  type: string;
+  properties?: object;
+  geometry: object;
 }
 
 export interface LayerStyle {
-  id: any;
-  type: any;
-  source: any;
+  id: string;
+  type: string;
+  source: string;
   layout: object;
   paint: object;
 }
