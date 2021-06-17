@@ -1,10 +1,5 @@
 import { Marker } from "react-map-gl";
-import { MarkerTypes } from "../types/types";
-
-interface MarkerComponent {
-  markers: MarkerTypes[];
-  isSquareSplitted: boolean;
-}
+import { MarkerTypes, MarkerComponent } from "../types/types";
 
 function Markers({ markers, isSquareSplitted }: MarkerComponent) {
   const sectorColors = (el: MarkerTypes) => {

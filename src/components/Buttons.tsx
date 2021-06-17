@@ -1,11 +1,6 @@
 import Button from "@material-ui/core/Button";
-import { MarkerTypes } from "../types/types";
+import { MarkerTypes, ButtonsTypes } from "../types/types";
 import { getRandomCoordinate, useStyles } from "../utils/utils";
-
-interface ButtonsTypes {
-  setIsSquareSplitted: (isSquareSplitted: boolean) => void;
-  setMarker: React.Dispatch<React.SetStateAction<MarkerTypes[]>>;
-}
 
 function Buttons({ setIsSquareSplitted, setMarker }: ButtonsTypes) {
   const classes = useStyles();

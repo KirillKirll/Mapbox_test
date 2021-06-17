@@ -1,6 +1,6 @@
 import { GeoJSON } from "./types/types";
 
-export const geojson: GeoJSON = {
+export const geojson: GeoJSON.Feature<GeoJSON.Geometry> = {
   type: "Feature",
   properties: {},
   geometry: {
@@ -15,7 +15,7 @@ export const geojson: GeoJSON = {
   },
 };
 
-export const lineHorizontal: GeoJSON = {
+export const lineHorizontal: GeoJSON.Feature<GeoJSON.Geometry> = {
   type: "Feature",
   properties: {},
   geometry: {
@@ -27,7 +27,7 @@ export const lineHorizontal: GeoJSON = {
   },
 };
 
-export const lineVertical: GeoJSON = {
+export const lineVertical: GeoJSON.Feature<GeoJSON.Geometry> = {
   type: "Feature",
   properties: {},
   geometry: {

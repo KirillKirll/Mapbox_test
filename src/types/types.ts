@@ -14,15 +14,25 @@ export interface MarkerTypes {
 }
 
 export interface GeoJSON {
-  type: string;
+  type: "Feature";
   properties?: object;
-  geometry: object;
+  geometry: {};
 }
 
 export interface LayerStyle {
   id: string;
-  type: string;
+  type: "line";
   source: string;
   layout: object;
   paint: object;
+}
+
+export interface ButtonsTypes {
+  setIsSquareSplitted: (isSquareSplitted: boolean) => void;
+  setMarker: React.Dispatch<React.SetStateAction<MarkerTypes[]>>;
+}
+
+export interface MarkerComponent {
+  markers: MarkerTypes[];
+  isSquareSplitted: boolean;
 }

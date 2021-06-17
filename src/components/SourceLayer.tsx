@@ -1,9 +1,10 @@
 import { Source, Layer } from "react-map-gl";
+import { LayerStyle } from "../types/types";
 
 interface SrcLayer {
-  id: any;
-  data: any;
-  layerData: any;
+  id: string;
+  data: GeoJSON.Feature<GeoJSON.Geometry>;
+  layerData: LayerStyle;
 }
 
 function SourceLayer({ id, data, layerData }: SrcLayer) {
