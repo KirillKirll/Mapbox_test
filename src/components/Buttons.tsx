@@ -7,15 +7,13 @@ function Buttons({ setIsSquareSplitted, setMarker }: ButtonsTypes) {
 
   const handleMarkers = () => {
     for (let i = 0; i < 40; i++) {
-      const dots = {
+      const dots: MarkerTypes = {
         latitude: getRandomCoordinate(53.859167, 53.949264),
         longitude: getRandomCoordinate(27.452036, 27.594389),
         index: i + 1,
       };
 
-      setMarker((state: MarkerTypes[]) => {
-        return [...state, dots];
-      });
+      setMarker((markers: MarkerTypes[]) => [...markers, dots]);
     }
   };
 

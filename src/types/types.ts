@@ -28,8 +28,8 @@ export interface LayerStyle {
 }
 
 export interface ButtonsTypes {
-  setIsSquareSplitted: (isSquareSplitted: boolean) => void;
-  setMarker: React.Dispatch<React.SetStateAction<MarkerTypes[]>>;
+  setIsSquareSplitted(isSquareSplitted: boolean): void;
+  setMarker(markers: object): void;
 }
 
 export interface MarkerComponent {
